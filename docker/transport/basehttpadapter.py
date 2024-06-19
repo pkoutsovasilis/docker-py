@@ -6,3 +6,9 @@ class BaseHTTPAdapter(requests.adapters.HTTPAdapter):
         super().close()
         if hasattr(self, 'pools'):
             self.pools.clear()
+
+    def _get_connection(self, request, *args, proxies=None, **kwargs):
+        return self.get_connection(request.url, proxies)
+    
+    def get_connection_with_tls_context(self, request, verify, proxies=None, cert=None):
+        return self.get_connection(request.url, proxies)
